@@ -14,13 +14,15 @@ After a minute or so, you can access Ambari's Web UI at localhost:8080. Default 
 
 ##Using Ambari Blueprints:
 To snapshot your cluster's configuration into a blueprint:
-```
+
 # You can extract a blueprint as soon as you click Deploy. No need to wait for install to complete.
+```
 curl --user admin:admin -H 'X-Requested-By:admin' localhost:8080/api/v1/clusters/dev?format=blueprint > examples/blueprints/multi-container.json 
 ```
 
 
 # Can swap "single-container" for multi-container, or any type saved in examples/blueprints and examples/hostgroups
+```
 sh submit-blueprint.sh multi-container examples/blueprints/multi-container.json
 ```
 
