@@ -1404,7 +1404,7 @@
       ],
       "configurations" : [ ],
       "name" : "host_group_1",
-      "cardinality" : "1"
+      "cardinality" : "1+"
     }
   ],
   "Blueprints" : {
