@@ -7,7 +7,7 @@ docker-compose -f examples/compose/multi-container.yml build
 
 ##Running HDP 2.5:
 ```
-docker-compose -f examples/compose/multi-container.yml up
+docker-compose -f examples/compose/multi-container.yml up --no-recreate 
 ```
 
 After a minute or so, you can access Ambari's Web UI at localhost:8080. Default User/PW is admin/admin.
