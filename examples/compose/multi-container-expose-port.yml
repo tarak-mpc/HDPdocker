@@ -38,6 +38,7 @@ services:
      # ZooKeeper
      - "2181:2181"
      # HDFS
+     - "50070:50070"
      - "8020:8020"
      - "9000:9000"
      - "50090:50090"
@@ -91,9 +92,8 @@ services:
      - dev
     hostname: dn0
     domainname: dev
-    ports:
+    expose:
      # HDFS
-     - "50070:50070"
      - "50470:50470"
      - "50075:50075"
      - "50475:50475"
@@ -122,9 +122,8 @@ services:
      - dev
     hostname: dn1
     domainname: dev
-    ports:
+    expose:
      # HDFS
-     - "50070:50070"
      - "50470:50470"
      - "50075:50075"
      - "50475:50475"
