@@ -21,6 +21,7 @@ services:
     hostname: ambari-server
     domainname: dev
     ports:
+     - "8440:8440"
      - "8080:8080"
   master0.dev:
     build:
