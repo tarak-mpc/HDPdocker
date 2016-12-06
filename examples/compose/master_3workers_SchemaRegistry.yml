@@ -175,7 +175,7 @@ services:
 #    	context: ../../containers/schema_registry
 #    	args:
 #      	 - DDL_URL=${DDL_URL}
-      image: confluentinc/cp-schema-registry:latest
+      image: confluent/schema-registry:latest
       domainname: dev
       hostname: schema_registry
       networks:
