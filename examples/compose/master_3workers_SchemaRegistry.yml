@@ -186,7 +186,7 @@ services:
         SCHEMA_REGISTRY_HOST_NAME: localhost
         SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'master0.dev:2181'
         SCHEMA_REGISTRY_LISTENERS: http://localhost:8081
-        SCHEMA_REGISTRY_DEBUG: true
+        SCHEMA_REGISTRY_DEBUG: 'true'
 networks:
   dev:
     driver: bridge
