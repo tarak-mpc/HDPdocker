@@ -183,6 +183,7 @@ services:
       ports:
        - "8081:8081"
       environment:
+        SCHEMA_REGISTRY_HOST_NAME: schema_registry
         SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: master0.dev:2181
         SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
         KAFKASTORE_TOPIC: "_schema"
