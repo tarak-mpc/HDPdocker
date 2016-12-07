@@ -140,22 +140,62 @@ services:
      - "8983"
      # Kafka
      - "6667"
+  dn2.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker
+    privileged: true
+    networks:
+     - dev
+    hostname: dn2
+    domainname: dev
+    expose:
+     # HDFS
+     - "50470"
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     - "50030"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     - "8042"
+     # Solr
+     - "8983"
+     # Kafka
+     - "6667"     
   schema_registry.dev:
 #    build:
 #    	context: ../../containers/schema_registry
 #    	args:
 #      	 - DDL_URL=${DDL_URL}
-      image: confluentinc/cp-schema-registry:latest
+      image: confluent/schema-registry:latest
       domainname: dev
+      privileged: true
       hostname: schema_registry
+      links:
+       - dn0.dev
+       - dn1.dev
+       - dn2.dev
+       - master0.dev
       networks:
        - dev
       ports:
-        - "8081:8081"
+       - "8081:8081"
       environment:
+        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
+        SCHEMA_REGISTRY_DEBUG: "true"
         SCHEMA_REGISTRY_HOST_NAME: schema_registry
-        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'master0.dev:2181'
-        SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "master0.dev:2181"
+        SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+        SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
+        SCHEMA_REGISTRY_KAFKASTORE_TOPIC: "_schema"
 networks:
   dev:
     driver: bridge
