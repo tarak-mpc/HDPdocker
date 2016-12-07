@@ -175,7 +175,7 @@ services:
 #    	context: ../../containers/schema_registry
 #    	args:
 #      	 - DDL_URL=${DDL_URL}
-      image: cmcapitanio/schema-registry:latest
+      image: mcapitanio/schema-registry:latest
       domainname: dev
       hostname: schema_registry
       privileged: true
