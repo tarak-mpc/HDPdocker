@@ -183,6 +183,11 @@ services:
        - dev
       ports:
        - "8081:8081"
+      links:
+       - dn0.dev
+       - dn1.dev
+       - dn2.dev
+       - master0.dev
 #      environment:
 #        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
 #        SCHEMA_REGISTRY_DEBUG: "false"
