@@ -175,22 +175,22 @@ services:
 #    	context: ../../containers/schema_registry
 #    	args:
 #      	 - DDL_URL=${DDL_URL}
-      image: confluent/schema-registry:latest
+      image: cmcapitanio/schema-registry:latest
       domainname: dev
       hostname: schema_registry
+      privileged: true
       networks:
        - dev
       ports:
-       - "8081"
-      environment:
-        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
-        SCHEMA_REGISTRY_DEBUG: "false"
-        SCHEMA_REGISTRY_HOST_NAME: schema_registry
-        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "master0.dev:2181"
-        SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
-        SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
-        KAFKASTORE_TOPIC: "_schema"
-      privileged: true
+       - "8081:8081"
+#      environment:
+#        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
+#        SCHEMA_REGISTRY_DEBUG: "false"
+#        SCHEMA_REGISTRY_HOST_NAME: schema_registry
+#        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "master0.dev:2181"
+#        SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+#        SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
+#        KAFKASTORE_TOPIC: "_schema"
 networks:
   dev:
     driver: bridge
