@@ -22,6 +22,8 @@ services:
     domainname: dev
     ports:
      - "8080:8080"
+    volumes:
+     - /shared:/fromlocal
   master0.dev:
     build:
       context: ../../containers/node
@@ -140,7 +142,36 @@ services:
      - "8983"
      # Kafka
      - "6667"
-
+  dn2.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker
+    privileged: true
+    networks:
+     - dev
+    hostname: dn2
+    domainname: dev
+    expose:
+     # HDFS
+     - "50470"
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     - "50030"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     - "8042"
+     # Solr
+     - "8983"
+     # Kafka
+     - "6667"     
 networks:
   dev:
     driver: bridge
