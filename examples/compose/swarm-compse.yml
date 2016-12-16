@@ -154,6 +154,7 @@ services:
      - dev
     hostname: dn2
     domainname: dev
+    expose:
      # HDFS
      - "50470:50470"
      - "50075:50075"
