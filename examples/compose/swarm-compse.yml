@@ -94,7 +94,7 @@ services:
      - dev
     hostname: dn0
     domainname: dev
-    expose:
+    ports:
          # HDFS
      - "50470:50470"
      - "50075:50075"
@@ -124,7 +124,7 @@ services:
      - dev
     hostname: dn1
     domainname: dev
-    expose:
+    ports:
      # HDFS
      - "50470:50470"
      - "50075:50075"
@@ -154,7 +154,7 @@ services:
      - dev
     hostname: dn2
     domainname: dev
-    expose:
+    ports:
      # HDFS
      - "50470:50470"
      - "50075:50075"
