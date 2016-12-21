@@ -211,9 +211,9 @@ services:
      - "3030:3030"
      - "3031:3031"
     environment:
-      ID: 01 
-      BS: "dn2.dev:6667,dn2.dev:6667,dn2.dev:6667"
-      ZK: "master0:2181"
+      ID: 02
+      BS: "dn0.dev:6667,dn1.dev:6667,dn2.dev:6667"
+      ZK: "master0.dev:2181"
       SC: "http://schema_registry.dev:8081"
       HOST: connect.dev      
 networks:
