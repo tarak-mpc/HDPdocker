@@ -198,7 +198,7 @@ services:
         SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
         SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
         SCHEMA_REGISTRY_KAFKASTORE_TOPIC: "_schema"
-  connect:
+  connect.dev:
     image: landoop/fast-data-dev-connect-cluster
     domainname: dev
     privileged: true
