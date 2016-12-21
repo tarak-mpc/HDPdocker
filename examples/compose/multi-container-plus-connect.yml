@@ -1,0 +1,221 @@
+version: '2'
+services:
+  postgres.dev:
+    build:
+     context: ../../containers/postgres
+     args:
+      - DDL_URL=${DDL_URL}
+    image: hdp/postgres
+    networks:
+     - dev
+    hostname: postgres
+    domainname: dev
+  ambari-server.dev:
+    build: 
+      context: ../../containers/ambari-server
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: hdp/ambari-server
+    networks:
+     - dev
+    hostname: ambari-server
+    domainname: dev
+    ports:
+     - "8080:8080"
+    volumes:
+     - /shared:/fromlocal
+  master0.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/master
+    privileged: true
+    networks:
+     - dev
+    hostname: master0
+    domainname: dev
+    ports:
+     # ZooKeeper
+     - "2181:2181"
+     # HDFS
+     - "50070:50070"
+     - "8020:8020"
+     - "9000:9000"
+     - "50090:50090"
+     # YARN
+     - "8088:8088"
+     - "8050:8050"
+     - "8025:8025"
+     - "8030:8030"
+     - "8141:8141"
+     - "45454:45454"
+     - "10200:10200"
+     - "8188:8188"
+     - "8190:8190"
+     - "19888:19888"
+     # HiveServer2
+     - "10000:10000"
+     - "9999:9999"
+     - "9933:9933"
+     - "10015:10015"
+     # HBase
+     - "16000:16000"
+     - "16010:16010"
+     # Storm
+     - "8000:8000"
+     - "8744:8744"
+     # Oozie
+     - "11000:11000"
+     - "11443:11443"
+     # Knox
+     - "8443:8443"
+     # Ranger
+     - "6080:6080"
+     - "6182:6182"
+     - "6083:6083"
+     - "6183:6183"
+     # Grafana
+     - "3000:3000"
+     # Zeppelin
+     - "9995:9995"
+     # Kerberos
+     #- "88:88"
+  dn0.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker
+    privileged: true
+    networks:
+     - dev
+    hostname: dn0
+    domainname: dev
+    expose:
+     # HDFS
+     - "50470"
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     - "50030"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     - "8042"
+     # Solr
+     - "8983"
+     # Kafka
+     - "6667"
+  dn1.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker
+    privileged: true
+    networks:
+     - dev
+    hostname: dn1
+    domainname: dev
+    expose:
+     # HDFS
+     - "50470"
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     - "50030"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     - "8042"
+     # Solr
+     - "8983"
+     # Kafka
+     - "6667"
+  dn2.dev:
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker
+    privileged: true
+    networks:
+     - dev
+    hostname: dn2
+    domainname: dev
+    expose:
+     # HDFS
+     - "50470"
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     - "50030"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     - "8042"
+     # Solr
+     - "8983"
+     # Kafka
+     - "6667"     
+  schema_registry.dev:
+#    build:
+#    	context: ../../containers/schema_registry
+#    	args:
+#      	 - DDL_URL=${DDL_URL}
+      image: confluent/schema-registry:latest
+      domainname: dev
+      privileged: true
+      hostname: schema_registry
+      links:
+       - dn0.dev  
+       - dn1.dev
+       - dn2.dev
+       - master0.dev
+      networks:
+       - dev
+      ports:
+       - "8081:8081"
+      environment:
+        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
+        SCHEMA_REGISTRY_DEBUG: "true"
+        SCHEMA_REGISTRY_HOST_NAME: schema_registry
+        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "master0.dev:2181"
+        SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+        SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
+        SCHEMA_REGISTRY_KAFKASTORE_TOPIC: "_schema"
+  connect:
+    image: landoop/fast-data-dev-connect-cluster
+    domainname: dev
+    privileged: true
+    hostname: connect
+    networks:
+     - dev
+    ports:
+     - "8082:8082"
+     - "8083:8083"
+     - "3030:3030"
+     - "3031:3031"
+    environment:
+      ID: 01 
+      BS: "dn2.dev:6667,dn2.dev:6667,dn2.dev:6667"
+      ZK: "master0:2181"
+      SC: "http://schema_registry.dev:8081"
+      HOST: connect.dev      
+networks:
+  dev:
+    driver: bridge
