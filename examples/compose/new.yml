@@ -22,6 +22,8 @@ services:
     domainname: dev
     ports:
      - "8080:8080"
+    volumes:
+     - /shared:/fromlocal
   master0.dev:
     build:
       context: ../../containers/node
@@ -58,6 +60,7 @@ services:
      - "9999:9999"
      - "9933:9933"
      - "10015:10015"
+     - "50111:50111"
      # HBase
      - "16000:16000"
      - "16010:16010"
@@ -78,6 +81,8 @@ services:
      - "3000:3000"
      # Zeppelin
      - "9995:9995"
+     # Sqoop
+     - "16000:16000"
      # Kerberos
      #- "88:88"
   dn0.dev:
@@ -110,6 +115,8 @@ services:
      - "8983"
      # Kafka
      - "6667"
+     # Sqoop
+     - "16000:16000"
   dn1.dev:
     build:
       context: ../../containers/node
@@ -140,6 +147,8 @@ services:
      - "8983"
      # Kafka
      - "6667"
+     # Sqoop
+     - "16000:16000"
   dn2.dev:
     build:
       context: ../../containers/node
@@ -169,33 +178,9 @@ services:
      # Solr
      - "8983"
      # Kafka
-     - "6667"     
-  schema_registry.dev:
-#    build:
-#    	context: ../../containers/schema_registry
-#    	args:
-#      	 - DDL_URL=${DDL_URL}
-      image: confluentinc/cp-schema-registry:latest
-      domainname: dev
-      privileged: true
-      hostname: schema_registry
-      links:
-       - dn0.dev
-       - dn1.dev
-       - dn2.dev
-       - master0.dev
-      networks:
-       - dev
-      ports:
-       - "8081:8081"
-      environment:
-        SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: none
-        SCHEMA_REGISTRY_DEBUG: "true"
-        SCHEMA_REGISTRY_HOST_NAME: schema_registry
-        SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "master0.dev:2181"
-        SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
-        SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 3
-        SCHEMA_REGISTRY_KAFKASTORE_TOPIC: "_schema"
+     - "6667" 
+     # Sqoop
+     - "16000:16000"
 networks:
   dev:
     driver: bridge
