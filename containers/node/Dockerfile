@@ -22,6 +22,7 @@ RUN yum install -y spark* livy*
 RUN yum install -y zeppelin*
 RUN yum install -y falcon_*
 RUN yum install -y oozie_*
+RUN yum install -y sqoop_*
 #RUN yum install -y lucidworks-hdpsearch
 RUN yum install -y lzo snappy-devel rpcbind
 RUN rm /etc/yum.repos.d/hdp*.repo
