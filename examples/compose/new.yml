@@ -81,8 +81,6 @@ services:
      - "3000:3000"
      # Zeppelin
      - "9995:9995"
-     # Sqoop
-     - "16000:16000"
      # Kerberos
      #- "88:88"
   dn0.dev:
@@ -116,7 +114,7 @@ services:
      # Kafka
      - "6667"
      # Sqoop
-     - "16000:16000"
+     - "16000"
   dn1.dev:
     build:
       context: ../../containers/node
@@ -148,7 +146,7 @@ services:
      # Kafka
      - "6667"
      # Sqoop
-     - "16000:16000"
+     - "16000"
   dn2.dev:
     build:
       context: ../../containers/node
@@ -180,7 +178,7 @@ services:
      # Kafka
      - "6667" 
      # Sqoop
-     - "16000:16000"
+     - "16000"
 networks:
   dev:
     driver: bridge
