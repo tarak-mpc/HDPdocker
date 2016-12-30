@@ -112,7 +112,7 @@ services:
      # Solr
      - "8983"
      # Kafka
-     - "6667"
+     # "6667"
      # Sqoop
      - "16000"
   dn1.dev:
@@ -144,7 +144,7 @@ services:
      # Solr
      - "8983"
      # Kafka
-     - "6667"
+     # "6667"
      # Sqoop
      - "16000"
   dn2.dev:
@@ -176,9 +176,93 @@ services:
      # Solr
      - "8983"
      # Kafka
-     - "6667" 
+     # "6667" 
      # Sqoop
      - "16000"
+       kafka0.dev:
+    image: confluentinc/cp-enterprise-kafka:3.1.1
+    hostname: kafka0 
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+    ports:
+      - ':9090:9090'
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_BROKER_RACK: 1
+      KAFKA_LOG_DIRS: '/var/lib/kafka/kafka0'
+      KAFKA_ZOOKEEPER_CONNECT: 'master0.dev:2181,dn0.dev:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka0.dev:9090'
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka0.dev:9090
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: master0.dev:2181,dn0.dev:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 2
+      CONFLUENT_METRICS_REPORTER_PUBLISH_MS: 1000
+
+  kafka1.dev:
+    image: confluentinc/cp-enterprise-kafka:3.1.1
+    hostname: kafka1
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+    ports:
+      - ':9091:9091'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: 1
+      KAFKA_LOG_DIRS: '/var/lib/kafka/kafka1'
+      KAFKA_ZOOKEEPER_CONNECT: 'master0.dev:2181,dn0.dev:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka1.dev:9091'
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka0.dev:9090
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: master0.dev:2181,dn0.dev:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 2
+      CONFLUENT_METRICS_REPORTER_PUBLISH_MS: 1000
+
+  kafka2.dev:
+    container_name: kafka2
+    image: confluentinc/cp-enterprise-kafka:3.1.1
+    hostname: kafka2
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+    ports:
+      - ':9092:9092'
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_BROKER_RACK: 1
+      KAFKA_LOG_DIRS: '/var/lib/kafka/kafka2'
+      KAFKA_ZOOKEEPER_CONNECT: 'master0.dev:2181,dn0.dev:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka2.dev:9092'
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka0.dev:9090
+      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: master0.dev:2181,dn0.dev:2181
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 2
+      CONFLUENT_METRICS_REPORTER_PUBLISH_MS: 1000
+
+  schema_registry.dev:
+    image: confluentinc/cp-schema-registry:3.1.1
+    hostname: schema_registry
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+      - kafka0.dev
+      - kafka1.dev
+      - kafka2.dev
+    ports:
+      - ':8081:8081'
 networks:
   dev:
     driver: bridge
