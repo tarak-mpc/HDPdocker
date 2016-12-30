@@ -226,7 +226,6 @@ services:
       CONFLUENT_METRICS_REPORTER_PUBLISH_MS: 1000
 
   kafka2.dev:
-    container_name: kafka2
     image: confluentinc/cp-enterprise-kafka:3.1.1
     hostname: kafka2
     networks:
