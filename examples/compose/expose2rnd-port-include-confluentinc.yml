@@ -179,7 +179,7 @@ services:
      # "6667" 
      # Sqoop
      - "16000"
-       kafka0.dev:
+  kafka0.dev:
     image: confluentinc/cp-enterprise-kafka:3.1.1
     hostname: kafka0 
     networks:
@@ -263,6 +263,86 @@ services:
       - kafka2.dev
     ports:
       - ':8081:8081'
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'master0.dev:2181,dn0.dev:2181'
+
+  kafka_rest.dev:
+    image: confluentinc/cp-kafka-rest:3.1.1
+    hostname: kafka_rest
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+      - kafka0.dev
+      - kafka1.dev
+      - kafka2.dev
+      - schema_registry.dev
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_REST_HOST_NAME: "kafka_rest"
+      KAFKA_REST_ZOOKEEPER_CONNECT: "master0.dev:2181,dn0.dev:2181"
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schema_registry.dev:8081"
+
+  connect.dev:
+    image: confluentinc/cp-kafka-connect:3.1.1
+    hostname: connect
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+      - kafka0.dev
+      - kafka1.dev
+      - kafka2.dev
+      - schema_registry.dev
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka0.dev:9090,kafka1.dev:9091,kafka2.dev:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry.dev:8081'
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema_registry.dev:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_ZOOKEEPER_CONNECT: 'master0.dev:2181,dn0.dev:2181'
+
+  control-center.dev:
+    image: confluentinc/cp-enterprise-control-center:3.1.1
+    hostname: control-center
+    networks:
+     - dev
+    domainname: dev 
+    depends_on:
+      - master0.dev
+      - dn0.dev
+      - kafka0.dev
+      - kafka1.dev
+      - kafka2.dev
+      - schema_registry.dev
+      - connect.dev
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka0.dev:9090,kafka1.dev:9091,kafka2.dev:9092'
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'master0.dev:2181,dn0.dev:2181'
+      CONTROL_CENTER_CONNECT_CLUSTER: 'connect.dev:8083'
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      PORT: 9021
 networks:
   dev:
     driver: bridge
