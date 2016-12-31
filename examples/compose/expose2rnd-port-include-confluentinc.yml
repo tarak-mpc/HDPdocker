@@ -186,7 +186,7 @@ services:
       PORT: 9021
       
   elasticsearch:
-    container_name:elasticsearch
+    container_name: elasticsearch
     image: library/elasticsearch:5.0.2
     restart: always
     hostname: elasticsearch
@@ -200,7 +200,7 @@ services:
       - "9300:9300"
       
   kibana:
-    container_name:kibana
+    container_name: kibana
     image: library/kibana:5.0.2
     restart: always
     hostname: kibana
@@ -212,7 +212,7 @@ services:
       - "5601:5601"
 
   postgres:
-    container_name:postgres
+    container_name: postgres
     build:
      context: ../../containers/postgres
      args:
@@ -223,7 +223,7 @@ services:
     hostname: postgres
     
   ambari-server:
-    container_name:
+    container_name: ambari-server
     build: 
       context: ../../containers/ambari-server
       args:
@@ -236,8 +236,9 @@ services:
      - "8080:8080"
     volumes:
      - /shared:/fromlocal
+     
   master0:
-    container_name:master0
+    container_name: master0
     build:
       context: ../../containers/node
       args:
@@ -295,8 +296,9 @@ services:
      - "9995:9995"
      # Kerberos
      #- "88:88"
+     
   dn0:
-    container_name:dn0
+    container_name: dn0
     build:
       context: ../../containers/node
       args:
@@ -325,8 +327,9 @@ services:
      - "8983"
      # Sqoop
      - "16000"
+     
   dn1:
-    container_name:dn1
+    container_name: dn1
     build:
       context: ../../containers/node
       args:
@@ -355,8 +358,9 @@ services:
      - "8983"
      # Sqoop
      - "16000"
+     
   dn2:
-    container_name:dn2
+    container_name: dn2
     build:
       context: ../../containers/node
       args:
