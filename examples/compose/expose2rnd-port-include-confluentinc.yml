@@ -251,7 +251,7 @@ services:
     hostname: master0
     ports:
      # ZooKeeper
-     - "2181:2181"
+     #- "2181:2181"
      # HDFS
      - "50070:50070"
      - "8020:8020"
