@@ -234,8 +234,9 @@ services:
     hostname: ambari-server
     ports:
      - "8080:8080"
-     - "8440:8440"
-     - "8441:8441"
+    expose:
+     - "8440"
+     - "8441"
     volumes:
      - /shared:/fromlocal
      
