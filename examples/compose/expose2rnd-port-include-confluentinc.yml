@@ -234,6 +234,8 @@ services:
     hostname: ambari-server
     ports:
      - "8080:8080"
+    depends_on:
+      - postgres
     expose:
      - "8440"
      - "8441"
@@ -252,6 +254,8 @@ services:
     networks:
      - dev
     hostname: master0
+    depends_on:
+      - ambari-server 
     ports:
      # ZooKeeper
      #- "2181:2181"
@@ -312,6 +316,8 @@ services:
     networks:
      - dev
     hostname: dn0
+    depends_on:
+      - ambari-server 
     ports:
      # HDFS
      - "50470"
@@ -343,6 +349,8 @@ services:
     networks:
      - dev
     hostname: dn1
+    depends_on:
+      - ambari-server 
     ports:
      # HDFS
      - "50470"
@@ -374,6 +382,8 @@ services:
     networks:
      - dev
     hostname: dn2
+    depends_on:
+      - ambari-server 
     ports:
      # HDFS
      - "50470"
