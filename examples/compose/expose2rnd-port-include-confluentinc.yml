@@ -258,7 +258,7 @@ services:
       - ambari-server 
     ports:
      # ZooKeeper
-     #- "2181:2181"
+     - "2181"
      # HDFS
      - "50070:50070"
      - "8020:8020"
