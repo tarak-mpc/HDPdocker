@@ -334,7 +334,7 @@ services:
      # Solr
      - "8983"
      # Sqoop
-     - "16000"
+     - "12000"
      
   dn1:
     container_name: dn1
@@ -369,7 +369,7 @@ services:
      # Solr
      - "8983"
      # Sqoop
-     - "16000"
+     - "12000"
      
   dn2:
     container_name: dn2
@@ -404,7 +404,7 @@ services:
      # Solr
      - "8983"
      # Sqoop
-     - "16000"
+     - "12000"
 
 networks:
   dev:
