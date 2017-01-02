@@ -319,6 +319,8 @@ services:
     ports:
      # ZooKeeper
      - "2181"
+     - "2888"
+     - "3888"
      # HDFS
      - "50470"
      - "50075"
@@ -354,6 +356,8 @@ services:
     ports:
      # ZooKeeper
      - "2181"
+     - "2888"
+     - "3888"
      # HDFS
      - "50470"
      - "50075"
@@ -389,6 +393,8 @@ services:
     ports:
      # ZooKeeper
      - "2181"
+     - "2888"
+     - "3888"
      # HDFS
      - "50470"
      - "50075"
