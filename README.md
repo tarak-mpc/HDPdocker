@@ -75,5 +75,8 @@ echo "127.0.0.1 dn0 dn0.dev" >> /etc/hosts
 echo "127.0.0.1 dn1 dn1.dev" >> /etc/hosts
 ```
 
-TODO:
-1. Steps for using latest Docker 1.12 Swarm & Compose on multiple hosts
+
+##TODO:
+Complete /etc/hosts with lines that goes "EXT.ERN.AL.IP host01.domain host01", repeated properly for each host in the cluster
+every node should know about (including itself, more importantly), must exist.
+
