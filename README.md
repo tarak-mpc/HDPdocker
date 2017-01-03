@@ -77,6 +77,5 @@ echo "127.0.0.1 dn1 dn1.dev" >> /etc/hosts
 
 
 ##TODO:
-Complete /etc/hosts with lines that goes "EXT.ERN.AL.IP host01.domain host01", repeated properly for each host in the cluster
-every node should know about (including itself, more importantly), must exist.
+For hbase to work you need to complete /etc/hosts with lines that goes "EXT.ERN.AL.IP host01.domain host01", repeated properly for each host in the cluster every node should know about (including itself, more importantly), must exist.
 
