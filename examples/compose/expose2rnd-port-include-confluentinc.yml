@@ -147,8 +147,8 @@ services:
       - kafka2
       - schema-registry
     volumes:
-      - ..kafka-connect-irc/target/kafka-connect-irc-1.0-SNAPSHOT-package/share/java/kafka-connect-irc:/usr/share/java/kafka-connect-irc
-      - ..kafka-connect-irc/target/kafka-connect-irc-1.0-SNAPSHOT-package/etc/kafka-connect-irc:/etc/kafka-connect-irc
+      - ../kafka-connect-irc/target/kafka-connect-irc-1.0-SNAPSHOT-package/share/java/kafka-connect-irc:/usr/share/java/kafka-connect-irc
+      - ../kafka-connect-irc/target/kafka-connect-irc-1.0-SNAPSHOT-package/etc/kafka-connect-irc:/etc/kafka-connect-irc
     ports:
       - "8083:8083"
     environment:
