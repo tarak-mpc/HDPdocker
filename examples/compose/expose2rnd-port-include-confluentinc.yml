@@ -112,10 +112,10 @@ services:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
 
-  kafka_rest:
-    container_name: kafka_rest
+  kafka-rest:
+    container_name: kafka-rest
     image: confluentinc/cp-kafka-rest:3.1.1
-    hostname: kafka_rest
+    hostname: kafka-rest
     networks:
      - dev
     depends_on:
@@ -127,7 +127,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      KAFKA_REST_HOST_NAME: "kafka_rest"
+      KAFKA_REST_HOST_NAME: "kafka-rest"
       KAFKA_REST_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
@@ -515,10 +515,10 @@ services:
       SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
 
-  kafka_rest:
-    container_name: kafka_rest
+  kafka-rest:
+    container_name: kafka-rest
     image: confluentinc/cp-kafka-rest:3.1.1
-    hostname: kafka_rest
+    hostname: kafka-rest
     networks:
      - dev
     depends_on:
@@ -530,7 +530,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      KAFKA_REST_HOST_NAME: "kafka_rest"
+      KAFKA_REST_HOST_NAME: "kafka-rest"
       KAFKA_REST_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schemaregistry:8081"
