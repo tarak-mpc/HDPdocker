@@ -13,6 +13,8 @@ services:
      - dev
     ports:
       - "2181:2181"
+      - "2888"
+      - "3888"
     volumes:
       - zookeeper:/var/lib/zookeeper
     environment:
