@@ -7,10 +7,10 @@ volumes:
 services:
   zookeeper:
     container_name: zookeeper
-    image: confluentinc/cp-zookeeper:3.1.1
+    image: confluentinc/cp-zookeeper:latest
     hostname: zookeeper
     networks:
-     - drv
+     - dev
     ports:
       - "2181:2181"
       - "2888"
@@ -23,10 +23,10 @@ services:
 
   kafka0:
     container_name: kafka0 
-    image: confluentinc/cp-enterprise-kafka:3.1.1
+    image: confluentinc/cp-enterprise-kafka:latest
     hostname: kafka0 
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
     ports:
@@ -48,10 +48,10 @@ services:
 
   kafka1:
     container_name: kafka1
-    image: confluentinc/cp-enterprise-kafka:3.1.1
+    image: confluentinc/cp-enterprise-kafka:latest
     hostname: kafka1
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
     ports:
@@ -73,10 +73,10 @@ services:
 
   kafka2:
     container_name: kafka2
-    image: confluentinc/cp-enterprise-kafka:3.1.1
+    image: confluentinc/cp-enterprise-kafka:latest
     hostname: kafka2
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
     ports:
@@ -98,10 +98,10 @@ services:
 
   schema-registry:
     container_name: schema-registry
-    image: confluentinc/cp-schema-registry:3.1.1
+    image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
       - kafka0
@@ -116,10 +116,10 @@ services:
 
   kafka-rest:
     container_name: kafka-rest
-    image: confluentinc/cp-kafka-rest:3.1.1
+    image: confluentinc/cp-kafka-rest:latest
     hostname: kafka-rest
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
       - kafka0
@@ -136,10 +136,11 @@ services:
 
   connect:
     container_name: connect
-    image: confluentinc/cp-kafka-connect:3.1.1
+    image: confluentinc/cp-kafka-connect:latest
+    restart: always
     hostname: connect
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
       - kafka0
@@ -171,10 +172,11 @@ services:
       
   control-center:
     container_name: control-center
-    image: confluentinc/cp-enterprise-control-center:3.1.1
+    image: confluentinc/cp-enterprise-control-center:latest
+    restart: always
     hostname: control-center
     networks:
-     - drv
+     - dev
     depends_on:
       - zookeeper
       - kafka0
@@ -197,11 +199,11 @@ services:
       
   elasticsearch:
     container_name: elasticsearch
-    image: library/elasticsearch:5.1.1
+    image: library/elasticsearch:latest
     restart: always
     hostname: elasticsearch
     networks:
-     - drv
+     - dev
     #command: elasticsearch -Des.network.host=0.0.0.0
     depends_on:
       - connect
@@ -212,18 +214,18 @@ services:
       
   kibana:
     container_name: kibana
-    image: library/kibana:5.1.1
+    image: library/kibana:latest
     restart: always
     hostname: kibana
     networks:
-     - drv
+     - dev
     depends_on:
       - elasticsearch
     ports:
-      - "5601:5601"
+      - ":5601:5601"
 
 networks:
-  drv:
+  dev:
     driver: bridge
     driver_opts:
       com.docker.network.enable_ipv4: "true"
