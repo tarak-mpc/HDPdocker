@@ -225,9 +225,12 @@ services:
 networks:
   drv:
     driver: bridge
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.19.0.0/24
-                  gateway: 172.19.0.1     
-   
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16
+        range: 172.20.2.0/24
+        gateway: 172.20.0.1
