@@ -197,7 +197,7 @@ services:
       
   elasticsearch:
     container_name: elasticsearch
-    image: library/elasticsearch:5.0.2
+    image: library/elasticsearch:5.1.1
     restart: always
     hostname: elasticsearch
     networks:
@@ -211,7 +211,7 @@ services:
       
   kibana:
     container_name: kibana
-    image: library/kibana:5.0.2
+    image: library/kibana:5.1.1
     restart: always
     hostname: kibana
     networks:
