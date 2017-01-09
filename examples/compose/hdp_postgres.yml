@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 services:
   postgres:
     container_name: postgres
@@ -205,9 +205,12 @@ services:
 networks:
   dev:
     driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+      com.docker.network.enable_ipv6: "false"
     ipam:
       driver: default
-        config:
-         - subnet: 172.18.0.0/16
-           ip_range: 172.18.1.0/24
-           gateway: 172.18.0.1
+      config:
+      - subnet: 172.20.0.0/16
+        range: 172.20.1.0/24
+        gateway: 172.20.0.1
