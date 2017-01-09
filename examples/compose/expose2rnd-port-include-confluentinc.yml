@@ -209,6 +209,7 @@ services:
       - "9200:9200"
       - "9300:9300"
       
+      
   kibana:
     container_name: kibana
     image: library/kibana:5.1.1
@@ -220,6 +221,8 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
+    links:
+      - elasticsearch
 
   postgres:
     container_name: postgres
