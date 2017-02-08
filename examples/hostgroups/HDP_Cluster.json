@@ -1,0 +1,20 @@
+{ "blueprint":"HDP_Cluster",
+"default_password" : "dev",
+"configurations" : [
+  {
+    "hive-site" : {
+      "properties" : {
+        "javax.jdo.option.ConnectionURL" : "jdbc:postgresql://postgres"
+      }
+    }
+  }
+],
+"host_groups":[
+  { "name":"host_group_1",
+    "hosts":[ { "fqdn":"dn0" }, { "fqdn":"dn1" }, { "fqdn":"dn2" } ]
+  },
+  { "name":"host_group_2",
+    "hosts":[ { "fqdn":"master0" } ]
+  }
+]
+}
