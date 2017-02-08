@@ -27,8 +27,6 @@ services:
      - "8441:8441"
     depends_on:
       - postgres
-    volumes:
-     - /shared:/fromlocal
      
   master0:
     container_name: master0
@@ -50,6 +48,8 @@ services:
      - "8020:8020"
      - "9000:9000"
      - "50090:50090"
+     # SPARK
+     - "18080:18080"
      # YARN
      - "8088:8088"
      - "8050:8050"
@@ -89,6 +89,9 @@ services:
      - "9995:9995"
      # Kerberos
      #- "88:88"
+    volumes:
+     - /var/master0:/var
+     - /hadoop/master0:/hadoop
      
   dn0:
     container_name: dn0
@@ -126,6 +129,9 @@ services:
      - "8983"
      # Sqoop
      - "12000"
+    volumes:
+     - /var/dn0:/var
+     - /hadoop/dn0:/hadoop
      
   dn1:
     container_name: dn1
@@ -163,6 +169,9 @@ services:
      - "8983"
      # Sqoop
      - "12000"
+    volumes:
+     - /var/dn1:/var
+     - /hadoop/dn1:/hadoop
      
   dn2:
     container_name: dn2
@@ -200,6 +209,9 @@ services:
      - "8983"
      # Sqoop
      - "12000"
+    volumes:
+     - /var/dn2:/var
+     - /hadoop/dn2:/hadoop
 
 networks:
   dev:
