@@ -5,7 +5,7 @@
 docker-compose -f examples/compose/multi-container.yml build
 ```
 
-##Running HDP 2.5:
+##Running HDP 2.5.3:
 ```
 docker-compose -f examples/compose/multi-container.yml up --no-recreate 
 ```
