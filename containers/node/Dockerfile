@@ -21,7 +21,7 @@ RUN yum install -y pig_*
 RUN yum install -y datafu_*
 RUN yum install -y spark* livy*
 RUN yum install -y zeppelin*
-RUN yum install -y falcon_*
+#RUN yum install -y falcon_*
 RUN yum install -y oozie_*
 RUN yum install -y sqoop_*
 #RUN yum install -y lucidworks-hdpsearch
