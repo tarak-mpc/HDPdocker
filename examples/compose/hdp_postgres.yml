@@ -8,6 +8,8 @@ services:
      args:
       - DDL_URL=${DDL_URL}
     image: hdp/postgres
+    ports:
+     - "5432:5432"
     networks:
      - dev
     hostname: postgres
