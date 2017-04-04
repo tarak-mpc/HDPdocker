@@ -1,0 +1,213 @@
+version: '2'
+services:
+  postgres:
+    container_name: postgres
+    build:
+     context: ../../containers/postgres
+     args:
+      - DDL_URL=${DDL_URL}
+    image: hdp/postgres6
+    ports:
+     - "5432:5432"
+    networks:
+     - dev
+    hostname: postgres
+
+  ambari-server:
+    container_name: ambari-server
+    build:
+      context: ../../containers/ambari-server
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: hdp/ambari-server6
+    networks:
+     - dev
+    hostname: ambari-server
+    ports:
+     - "8080:8080"
+     - "8440:8440"
+     - "8441:8441"
+    depends_on:
+      - postgres
+
+  master0:
+    container_name: master0
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/master6
+    privileged: true
+    networks:
+     - dev
+    hostname: master0
+    depends_on:
+      - ambari-server
+    ports:
+     # HDFS
+     - "50070:50070"
+     - "8020:8020"
+     - "9000:9000"
+     - "50090:50090"
+     # SPARK
+     - "18080:18080"
+     # YARN
+     - "8088:8088"
+     - "8050:8050"
+     - "8025:8025"
+     - "8030:8030"
+     - "8141:8141"
+     - "45454:45454"
+     - "10200:10200"
+     - "8188:8188"
+     - "8190:8190"
+     - "19888:19888"
+     # MapReduce
+     - "10020:10020"
+     - "13562:13562"
+     - "19888:19888"
+     # HiveServer2
+     - "9083:9083"
+     - "10000:10000"
+     - "9999:9999"
+     # Tez
+     - "12999:12999"
+     - "10030:10030"
+     # HBase
+     - "16000:16000"
+     - "16010:16010"
+     # Storm
+     - "8000:8000"
+     - "8744:8744"
+     # Oozie
+     - "11000:11000"
+     - "11001:11001"
+     - "11443:11443"
+     # Knox
+     - "8443:8443"
+     # Ranger
+     - "6080:6080"
+     - "6182:6182"
+     - "6083:6083"
+     - "6183:6183"
+     # Grafana
+     - "3000:3000"
+     # Zeppelin
+     - "9995:9995"
+     # Kerberos
+     #- "88:88"
+
+  dn0:
+    container_name: dn0
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker6
+    privileged: true
+    networks:
+     - dev
+    hostname: dn0
+    depends_on:
+      - ambari-server
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50475"
+     - "50075"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+
+  dn1:
+    container_name: dn1
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker6
+    privileged: true
+    networks:
+     - dev
+    hostname: dn1
+    depends_on:
+      - ambari-server
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+
+  dn2:
+    container_name: dn2
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+       - HDP_REPO_URL=${HDP_REPO_URL}
+    image: hdp/worker6
+    privileged: true
+    networks:
+     - dev
+    hostname: dn2
+    depends_on:
+      - ambari-server
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50075"
+     - "50475"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "45455"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+
+networks:
+  dev:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16
+        gateway: 172.20.0.1
