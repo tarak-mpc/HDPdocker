@@ -4,7 +4,7 @@ set -e
 sed -i "s/\${ambariSchemaVersion}/2.5.0.3/g" /Ambari-DDL-Postgres-CREATE.sql
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     create database ambari;
-    create user ambari with password 'dev';
+    create user ambari with password 'ambari';
     GRANT ALL PRIVILEGES ON DATABASE ambari TO ambari;
     CREATE SCHEMA ambari AUTHORIZATION ambari;
     ALTER SCHEMA ambari OWNER TO ambari;
