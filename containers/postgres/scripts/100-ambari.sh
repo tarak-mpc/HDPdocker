@@ -2,7 +2,7 @@
 set -e
 
 cd ~/
-wget https://raw.githubusercontent.com/apache/ambari/branch-2.5/ambari-server/src/main/resources/Ambari-DDL-Postgres-CREATE.sql
+chown postgres Ambari-DDL-Postgres-CREATE.sql
 sed -i "s/\${ambariSchemaVersion}/2.5.0.3/g" Ambari-DDL-Postgres-CREATE.sql
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
@@ -16,5 +16,5 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     \connect ambari ambari;
     \i Ambari-DDL-Postgres-CREATE.sql 
 EOSQL
-chown postgres /pg_hba.conf
+
 cp /pg_hba.conf /var/lib/postgresql/data/
