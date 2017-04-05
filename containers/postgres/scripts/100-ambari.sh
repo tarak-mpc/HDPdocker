@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-sed -i "s/\${ambariSchemaVersion}/2.5.0.3/g" /Ambari-DDL-Postgres-CREATE.sql
+cd ~/
+wget https://raw.githubusercontent.com/apache/ambari/branch-2.5/ambari-server/src/main/resources/Ambari-DDL-Postgres-CREATE.sql
+sed -i "s/\${ambariSchemaVersion}/2.5.0.3/g" Ambari-DDL-Postgres-CREATE.sql
+
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     create database ambari;
     create user ambari with password 'dev';
@@ -14,4 +17,4 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
     \i Ambari-DDL-Postgres-CREATE.sql 
 EOSQL
 chown postgres /pg_hba.conf
-mv /pg_hba.conf /var/lib/postgresql/data/
+cp /pg_hba.conf /var/lib/postgresql/data/
