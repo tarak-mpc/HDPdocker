@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd ~/
+cd /home/postgres
 chown postgres Ambari-DDL-Postgres-CREATE.sql
 sed -i "s/\${ambariSchemaVersion}/2.5.0.3/g" Ambari-DDL-Postgres-CREATE.sql
 
