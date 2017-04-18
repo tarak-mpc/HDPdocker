@@ -45,8 +45,6 @@ services:
     depends_on:
       - ambari-server
     ports:
-     # KNOX
-     - "8443:8443"
      # HDFS
      - "50070:50070"
      - "8020:8020"
