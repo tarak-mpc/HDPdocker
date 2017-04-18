@@ -5,8 +5,6 @@ RUN ulimit -n 10000
 RUN yum install -y sudo wget openssl-devel postgresql-jdbc mysql-connector-java unzip
 RUN wget -nv ${AMBARI_REPO_URL} -O /etc/yum.repos.d/ambari.repo
 RUN wget -nv ${HDP_REPO_URL} -O /etc/yum.repos.d/hdp.repo
-# Uncomment if you want to run kerberos in container
-# RUN yum install -y krb5-server krb5-libs krb5-workstation
 RUN yum install -y ambari-agent
 RUN yum install -y ambari-metrics-*
 RUN yum install -y ambari-logsearch-*
@@ -29,6 +27,8 @@ RUN yum install -y smartsense*
 RUN yum install -y druid*
 RUN yum install -y superset* --nogpgcheck 
 RUN yum install -y lzo snappy-devel rpcbind
+RUN yum install -y knox*
+RUN yum install -y krb5-server krb5-libs krb5-workstation
 RUN rm /etc/yum.repos.d/hdp*.repo
 ADD scripts/start.sh /start.sh
 CMD /start.sh
