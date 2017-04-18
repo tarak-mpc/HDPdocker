@@ -37,7 +37,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/master6
+    image: hdp/master6s
     privileged: true
     networks:
      - dev
@@ -106,7 +106,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6
+    image: hdp/worker6s
     privileged: true
     networks:
      - dev
@@ -140,7 +140,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6
+    image: hdp/worker6s
     privileged: true
     networks:
      - dev
@@ -174,7 +174,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6
+    image: hdp/worker6s
     privileged: true
     networks:
      - dev
