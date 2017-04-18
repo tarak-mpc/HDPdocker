@@ -6,7 +6,7 @@ services:
      context: ../../containers/postgres
      args:
       - DDL_URL=${DDL_URL}
-    image: hdp/postgres6s
+    image: hdp/postgres6
     ports:
      - "5432:5432"
     networks:
@@ -19,7 +19,7 @@ services:
       context: ../../containers/ambari-server
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
-    image: hdp/ambari-server6s
+    image: hdp/ambari-server6
     networks:
      - dev
     hostname: ambari-server
@@ -37,7 +37,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/master6s
+    image: hdp/master6
     privileged: true
     networks:
      - dev
@@ -104,7 +104,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6s
+    image: hdp/worker6
     privileged: true
     networks:
      - dev
@@ -138,7 +138,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6s
+    image: hdp/worker6
     privileged: true
     networks:
      - dev
@@ -172,7 +172,7 @@ services:
       args:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
        - HDP_REPO_URL=${HDP_REPO_URL}
-    image: hdp/worker6s
+    image: hdp/worker6
     privileged: true
     networks:
      - dev
