@@ -13,6 +13,7 @@ services:
     ports:
      - "5432:5432"
     hostname: postgres
+    domainname: hdp.com
 
   kdc:
     networks:
@@ -49,6 +50,7 @@ services:
        - AMBARI_REPO_URL=${AMBARI_REPO_URL}
     image: hdp/ambari-server6
     hostname: ambari-server
+    domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
     ports:
@@ -71,6 +73,7 @@ services:
     image: hdp/master6s
     privileged: true
     hostname: master0
+    domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
     ports:
@@ -137,6 +140,7 @@ services:
     image: hdp/worker6s
     privileged: true
     hostname: dn0
+    domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
     ports:
@@ -172,6 +176,7 @@ services:
     image: hdp/worker6s
     privileged: true
     hostname: dn1
+    domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
     ports:
@@ -207,6 +212,7 @@ services:
     image: hdp/worker6s
     privileged: true
     hostname: dn2
+    domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
     ports:
