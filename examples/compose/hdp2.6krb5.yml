@@ -32,12 +32,12 @@ services:
      - "/etc/krb5.conf:/etc/krb5.conf"
     environment:
       BOOTSTRAP: 0
-      REALM: KDC.HDP.COM
-      DOMAIN_REALM:  kdc.hdp.com
+      REALM: HDP.COM
+      DOMAIN_REALM:  hdp.com
       KERB_MASTER_KEY: master
       KERB_ADMIN_USER: admin
       KERB_ADMIN_PASS: admin
-      SEARCH_DOMAINS:  kdc.hdp.com
+      SEARCH_DOMAINS:  hdp.com
 
 
   ambari-server.hdp.com:
