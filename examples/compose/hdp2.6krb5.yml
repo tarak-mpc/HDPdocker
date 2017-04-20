@@ -61,7 +61,7 @@ services:
     volumes:
      - "/etc/krb5.conf:/etc/krb5.conf"
     depends_on:
-      - postgres
+      - postgres.hdp.com
 
   master0.hdp.com:
     networks:
