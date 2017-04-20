@@ -1,6 +1,6 @@
 version: '2'
 services:
-  postgres:
+  postgres.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.2
@@ -15,13 +15,14 @@ services:
     hostname: postgres
     domainname: hdp.com
 
-  kdc:
+  kdc.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.3
     container_name: kdc
     image: sequenceiq/kerberos
-    hostname: kdc.hdp.com
+    hostname: kdc
+    domainname: hdp.com
     ports:
      - "88:88"
      - "749:749"
@@ -39,7 +40,7 @@ services:
       SEARCH_DOMAINS:  kdc.hdp.com
 
 
-  ambari-server:
+  ambari-server.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.4
@@ -57,10 +58,12 @@ services:
      - "8080:8080"
      - "8440:8440"
      - "8441:8441"
+    volumes:
+     - "/etc/krb5.conf:/etc/krb5.conf"
     depends_on:
       - postgres
 
-  master0:
+  master0.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.5
@@ -127,7 +130,7 @@ services:
      # Zeppelin
      - "9995:9995"
 
-  dn0:
+  dn0.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.6
@@ -163,7 +166,7 @@ services:
      # Kafka
      - "6667"
 
-  dn1:
+  dn1.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.7
@@ -199,7 +202,7 @@ services:
      # Kafka
      - "6667"
 
-  dn2:
+  dn2.hdp.com:
     networks:
       custom:
         ipv4_address: 172.20.0.8
