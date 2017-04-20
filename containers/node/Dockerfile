@@ -28,7 +28,7 @@ RUN yum install -y druid*
 RUN yum install -y superset* --nogpgcheck 
 RUN yum install -y lzo snappy-devel rpcbind
 RUN yum install -y knox*
-RUN yum install -y krb5-server krb5-libs krb5-workstation
+RUN yum install -y krb5-workstation
 RUN rm /etc/yum.repos.d/hdp*.repo
 ADD scripts/start.sh /start.sh
 CMD /start.sh
