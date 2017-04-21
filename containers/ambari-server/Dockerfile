@@ -8,5 +8,6 @@ RUN ambari-server setup --jdbc-db postgres --jdbc-driver=/usr/share/java/postgre
 RUN yum install -y unzip
 RUN wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
 RUN unzip -o -j -q jce_policy-8.zip -d /usr/jdk64/jdk1.8.0_112/jre/lib/security/
+RUN yum install -y krb5-workstation
 ADD scripts/start.sh /start.sh
 CMD /start.sh
