@@ -23,6 +23,14 @@ services:
     image: sequenceiq/kerberos
     hostname: kdc
     domainname: hdp.com
+    extra_hosts:
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
     ports:
      - "88:88"
      - "749:749"
@@ -79,6 +87,13 @@ services:
     domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
     ports:
      # HDFS
      - "50070:50070"
@@ -146,6 +161,13 @@ services:
     domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+
     ports:
      # ZooKeeper
      - "2181"
@@ -182,6 +204,13 @@ services:
     domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
     ports:
      # ZooKeeper
      - "2181"
@@ -218,6 +247,13 @@ services:
     domainname: hdp.com
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
     ports:
      # ZooKeeper
      - "2181"
