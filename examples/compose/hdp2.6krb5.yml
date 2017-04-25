@@ -85,6 +85,7 @@ services:
     privileged: true
     hostname: master0
     domainname: hdp.com
+    dns: 8.8.8.8
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
      - "master0.hdp.com master0:172.20.0.5"
@@ -159,6 +160,7 @@ services:
     privileged: true
     hostname: dn0
     domainname: hdp.com
+    dns: 8.8.8.8
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
      - "master0.hdp.com master0:172.20.0.5"
@@ -202,6 +204,7 @@ services:
     privileged: true
     hostname: dn1
     domainname: hdp.com
+    dns: 8.8.8.8
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
      - "master0.hdp.com master0:172.20.0.5"
@@ -245,6 +248,7 @@ services:
     privileged: true
     hostname: dn2
     domainname: hdp.com
+    dns: 8.8.8.8
     extra_hosts:
      - "kdc.hdp.com:172.20.0.3"
      - "master0.hdp.com master0:172.20.0.5"
