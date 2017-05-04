@@ -74,7 +74,7 @@ echo "127.0.0.1 master0 master0.dev" >> /etc/hosts
 echo "127.0.0.1 dn0 dn0.dev" >> /etc/hosts
 echo "127.0.0.1 dn1 dn1.dev" >> /etc/hosts
 ```
-
+THE NEW LOCAL REPOSITORY : http://repo.hdp.com/hdp-clones.repo
 
 ##TODO:
 For hbase to work you need to complete /etc/hosts with lines that goes "EXT.ERN.AL.IP host01.domain host01", repeated properly for each host in the cluster every node should know about (including itself, more importantly), must exist.
