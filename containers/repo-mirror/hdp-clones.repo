@@ -1,0 +1,3 @@
+[hdp-mirrors]
+name = Mirror / Clone of Ambari, HDP, and HDP-UTILS
+baseurl = http://FQDN/mirrors

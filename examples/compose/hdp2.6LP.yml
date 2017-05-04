@@ -1,0 +1,276 @@
+version: '2'
+services:
+  postgres.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.2
+    container_name: postgres
+    build:
+     context: ../../containers/postgres
+     args:
+      - DDL_URL=${DDL_URL}
+    image: image/postgres
+    ports:
+     - "5432:5432"
+    hostname: postgres
+    domainname: hdp.com
+
+  repo.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.3
+    container_name: repo
+        build:
+     context: ../../containers/repo-mirror
+     args:
+      - FQDN=repo.hdp.com
+      - HDP_VERSION=2.6.0.3
+      - HDP_UTILS_VERSION=1.1.0.21
+      - AMBARI_VERSION=2.5.0.3
+    image: image/repo-mirror
+    hostname: repo
+    domainname: hdp.com
+    ports:
+     - "80:80"
+    privileged: true
+
+  ambari-server.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.4
+    container_name: ambari-server
+    build:
+      context: ../../containers/ambari-server
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: image/ambari-server
+    hostname: ambari-server
+    domainname: hdp.com
+    extra_hosts:
+     - "repo.hdp.com:172.20.0.3"
+    ports:
+     - "8080:8080"
+     - "8440:8440"
+     - "8441:8441"
+    privileged: true
+
+  master0.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.5
+    container_name: master0
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: image/master
+    privileged: true
+    hostname: master0
+    domainname: hdp.com
+    dns: 8.8.8.8
+    extra_hosts:
+     - "repo.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
+    ports:
+     # HDFS
+     - "50070:50070"
+     - "8020:8020"
+     - "9000:9000"
+     - "50090:50090"
+     # SPARK
+     - "18080:18080"
+     # YARN
+     - "8088:8088"
+     - "8050:8050"
+     - "8025:8025"
+     - "8030:8030"
+     - "8141:8141"
+     - "45454:45454"
+     - "10200:10200"
+     - "8188:8188"
+     - "8190:8190"
+     # MapReduce
+     - "10020:10020"
+     - "13562:13562"
+     - "19888:19888"
+     # HiveServer2
+     - "9083:9083"
+     - "10000:10000"
+     - "9999:9999"
+     # Tez
+     - "12999:12999"
+     - "10030:10030"
+     # HBase
+     - "16000:16000"
+     - "16010:16010"
+     # Storm
+     - "8000:8000"
+     - "8744:8744"
+     # Oozie
+     - "11000:11000"
+     - "11001:11001"
+     - "11443:11443"
+     # Knox
+     - "8443:8443"
+     # Ranger
+     - "6080:6080"
+     - "6182:6182"
+     - "6083:6083"
+     - "6183:6183"
+     # Grafana
+     - "3000:3000"
+     # Zeppelin
+     - "9995:9995"
+
+  dn0.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.6
+    container_name: dn0
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: image/worker
+    privileged: true
+    hostname: dn0
+    domainname: hdp.com
+    dns: 8.8.8.8
+    extra_hosts:
+     - "repo.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50475"
+     - "50075"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "8042"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+     # Solr
+     - "8983"
+
+  dn1.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.7
+    container_name: dn1
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: image/worker
+    privileged: true
+    hostname: dn1
+    domainname: hdp.com
+    dns: 8.8.8.8
+    extra_hosts:
+     - "repo.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50475"
+     - "50075"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "8042"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+     # Solr
+     - "8983"
+
+  dn2.hdp.com:
+    networks:
+      custom:
+        ipv4_address: 172.20.0.8
+    container_name: dn2
+    build:
+      context: ../../containers/node
+      args:
+       - AMBARI_REPO_URL=${AMBARI_REPO_URL}
+    image: image/worker
+    privileged: true
+    hostname: dn2
+    domainname: hdp.com
+    dns: 8.8.8.8
+    extra_hosts:
+     - "repo.hdp.com:172.20.0.3"
+     - "master0.hdp.com master0:172.20.0.5"
+     - "ambari-server.hdp.com ambari-server:172.20.0.4"
+     - "dn2.hdp.com dn2:172.20.0.8"
+     - "dn1.hdp.com dn1:172.20.0.7"
+     - "postgres.hdp.com postgres:172.20.0.2"
+     - "dn0.hdp.com dn0:172.20.0.6"
+     
+    ports:
+     # ZooKeeper
+     - "2181"
+     - "2888"
+     - "3888"
+     # HDFS
+     - "50475"
+     - "50075"
+     - "50010"
+     - "50020"
+     # HBase
+     - "16020"
+     - "16030"
+     # Yarn
+     - "8042"
+     # Sqoop
+     - "12000"
+     # Kafka
+     - "6667"
+     # Solr
+     - "8983"
+
+networks:
+  custom:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16
+        gateway: 172.20.0.1
