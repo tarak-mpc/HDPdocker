@@ -20,7 +20,7 @@ services:
       custom:
         ipv4_address: 172.20.0.3
     container_name: repo
-        build:
+    build:
      context: ../../containers/repo-mirror
      args:
       - FQDN=repo.hdp.com
