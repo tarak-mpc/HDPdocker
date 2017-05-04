@@ -18,6 +18,6 @@ RUN mkdir -p /usr/local/apache2/htdocs/mirrors/
 RUN sed -e "s/FQDN/$FQDN/g" /tmp/hdp-clones.repo > /usr/local/apache2/htdocs/hdp-clones.repo
 
 COPY install-new-mirrors.sh /
-RUN ./install-new-mirrors.sh $HDP_VERSION $HDP_UTILS_VERSION $AMBARI_VERSION
+RUN /install-new-mirrors.sh $HDP_VERSION $HDP_UTILS_VERSION $AMBARI_VERSION
 
 WORKDIR /
